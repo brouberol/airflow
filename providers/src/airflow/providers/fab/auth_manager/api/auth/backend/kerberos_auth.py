@@ -58,9 +58,7 @@ _KERBEROS_SERVICE = KerberosService()
 
 def init_app(app):
     """Initialize application with kerberos."""
-    hostname = app.config.get("SERVER_NAME")
-    if not hostname:
-        hostname = getfqdn()
+    hostname = os.getenv('AIRFLOW_KERBEROS_HOSTNAME') or app.config.get("SERVER_NAME") or getfqdn()
     log.info("Kerberos: hostname %s", hostname)
 
     service = "airflow"
